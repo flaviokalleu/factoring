@@ -3,7 +3,7 @@ module.exports = {
     // Rodar suas operações de migração aqui
     await queryInterface.addColumn('Users', 'planoId', {
       type: Sequelize.INTEGER,
-      allowNull: false,
+      allowNull: true,
     });
   },
 

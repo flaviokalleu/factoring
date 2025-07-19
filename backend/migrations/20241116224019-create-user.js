@@ -8,58 +8,28 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true
       },
-      username: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
-      },
-      firstName: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false
-      },
-      lastName: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      whatsapp: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      empresa: {
-        type: Sequelize.STRING,
-        allowNull: true
-      },
-      cpf: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
       },
       email: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true
       },
-      senha: {
+      password: {
         type: Sequelize.STRING,
         allowNull: false
-      },
-      subdomain: {
-        type: Sequelize.STRING,
-        allowNull: true,
-        unique: true
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
       },
       role: {
         type: Sequelize.STRING,
         allowNull: false,
         defaultValue: 'admin'
+      },
+      status: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: 'active'
       },
       companyId: {
         type: Sequelize.INTEGER,
@@ -70,6 +40,14 @@ module.exports = {
         },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
       }
     });
   },

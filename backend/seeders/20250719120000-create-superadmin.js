@@ -14,6 +14,10 @@ module.exports = {
       updatedAt: new Date()
     }], { returning: true });
 
+    // Busca o primeiro plano
+    const planos = await queryInterface.sequelize.query('SELECT id FROM "planos" LIMIT 1;', { type: queryInterface.sequelize.QueryTypes.SELECT });
+    const planoId = planos.length ? planos[0].id : null;
+
     // Gera hash da senha
     const password = 'superadmin123';
     const hash = bcrypt.hashSync(password, 10);
@@ -26,6 +30,7 @@ module.exports = {
       role: 'superadmin',
       status: 'active',
       companyId: (Array.isArray(companies) ? companies[0].id : companies.id) || 1,
+      planoId,
       createdAt: new Date(),
       updatedAt: new Date()
     }]);

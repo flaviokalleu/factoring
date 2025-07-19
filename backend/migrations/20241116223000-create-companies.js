@@ -1,3 +1,4 @@
+// migrations/20241116223000-create-companies.js
 'use strict';
 
 module.exports = {
