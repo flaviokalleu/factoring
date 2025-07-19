@@ -42,7 +42,7 @@ const EnhancedLoginPage = () => {
         setTimeout(() => {
           setWarpTransition(true);
           setTimeout(() => {
-            navigate('/');
+            navigate('/dashboard');
           }, 2000);
         }, 1000);
       } else {

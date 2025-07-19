@@ -1,59 +1,37 @@
-/* Exemplo de ajuste para telas pequenas */
-@media (max-width: 768px) {
-  .ml-64 {
-    margin-left: 0;
+
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
-.login-container,
-.register-container {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
 }
 
-.login-container h2,
-.register-container h2 {
-  text-align: center;
-  margin-bottom: 20px;
+.card {
+  padding: 2em;
 }
 
-.login-container form,
-.register-container form {
-  display: flex;
-  flex-direction: column;
-}
-
-.login-container input,
-.register-container input {
-  margin-bottom: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.login-container button,
-.register-container button {
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.login-container button:hover,
-.register-container button:hover {
-  background-color: #0056b3;
-}
-
-.plan-selection {
-  margin-bottom: 10px;
-}
-
-.plan-selection label {
-  display: block;
-  margin-bottom: 5px;
+.read-the-docs {
+  color: #888;
 }

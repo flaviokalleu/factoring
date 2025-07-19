@@ -9,10 +9,7 @@ import {
   CartesianGrid, 
   Tooltip, 
   ResponsiveContainer,
-  PieChart, 
-  Pie, 
-  Cell,
-  Legend
+  Legend 
 } from "recharts";
 import { 
   CreditCard, 
@@ -23,8 +20,7 @@ import {
   Clock,
   Users,
   RefreshCcw,
-  Percent,
-  MapPin
+  Percent
 } from "lucide-react";
 
 const FuturisticDashboard = () => {
@@ -119,16 +115,6 @@ const FuturisticDashboard = () => {
     return Math.floor(diffTime / (1000 * 60 * 60 * 24));
   };
 
-  // Prepare chart data
-  const investmentBreakdown = [
-    { name: 'Total Investido', value: dashboardData.totalInvested },
-    { name: 'Juros Recebidos', value: dashboardData.interestReceived },
-    { name: 'Pagamentos Parciais', value: dashboardData.partialPayments },
-    { name: 'Investimentos Perdidos', value: dashboardData.lostInvestments }
-  ];
-
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF6384'];
-
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black flex items-center justify-center">
@@ -149,7 +135,7 @@ const FuturisticDashboard = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white p-8 pt-24">
       <div className="container mx-auto">
         <h1 className="text-4xl font-bold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
-         
+          Dashboard Financeiro
         </h1>
 
         {/* Key Metrics Grid */}
@@ -193,45 +179,86 @@ const FuturisticDashboard = () => {
           ))}
         </div>
 
-        {/* Expanded Charts and Client Insights Section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Investment Breakdown Pie Chart */}
-          <div className="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 md:col-span-1">
-            <h3 className="text-xl font-semibold mb-4 text-gray-200">Distribuição de Investimentos</h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={investmentBreakdown}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  outerRadius={80}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {investmentBreakdown.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: '#1F2937', 
-                    borderColor: '#374151' 
-                  }} 
-                  labelStyle={{ color: '#F9FAFB' }}
-                />
-                <Legend 
-                  layout="vertical" 
-                  align="right" 
-                  verticalAlign="middle"
-                  wrapperStyle={{ color: '#F9FAFB' }}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
+        {/* Line Chart Section */}
+        <div className="bg-gray-900 rounded-xl p-8 shadow-xl border border-gray-700 mb-12">
+  <h3 className="text-2xl font-bold mb-6 text-white">Tendências Mensais</h3>
+  <ResponsiveContainer width="100%" height={400}>
+  <LineChart data={dashboardData.monthlyTrends}>
+    <CartesianGrid strokeDasharray="5 5" stroke="#4B5563" />
+    <XAxis 
+      dataKey="month" 
+      stroke="#D1D5DB" 
+      tick={{ fontSize: 12, fontWeight: 600 }}
+      axisLine={{ stroke: '#374151' }}
+    />
+    <YAxis 
+      stroke="#D1D5DB" 
+      tick={{ fontSize: 12, fontWeight: 600 }}
+      axisLine={{ stroke: '#374151' }}
+    />
+    <Tooltip 
+      contentStyle={{ 
+        backgroundColor: '#2D3748', 
+        borderColor: '#374151',
+        borderRadius: '8px', 
+        padding: '10px' 
+      }} 
+      labelStyle={{ color: '#F9FAFB', fontWeight: 600 }}
+      itemStyle={{ color: '#F9FAFB' }}
+    />
+    <Legend 
+      wrapperStyle={{
+        fontSize: '14px',
+        fontWeight: '500',
+        color: '#F9FAFB',
+        marginTop: '10px'
+      }} 
+    />
+    <Line 
+      type="monotone" 
+      dataKey="totalInvested" 
+      stroke="#3B82F6" 
+      strokeWidth={3} 
+      dot={{ r: 4, stroke: '#3B82F6', strokeWidth: 2, fill: '#FFFFFF' }}
+      activeDot={{ r: 6, stroke: '#3B82F6', strokeWidth: 3, fill: '#FFFFFF' }}
+      name="Total Investido"
+    />
+    <Line 
+      type="monotone" 
+      dataKey="interestEarned" 
+      stroke="#10B981" 
+      strokeWidth={3} 
+      dot={{ r: 4, stroke: '#10B981', strokeWidth: 2, fill: '#FFFFFF' }}
+      activeDot={{ r: 6, stroke: '#10B981', strokeWidth: 3, fill: '#FFFFFF' }}
+      name="Juros Recebidos"
+    />
+    <Line 
+      type="monotone" 
+      dataKey="partialPayments" 
+      stroke="#F59E0B" 
+      strokeWidth={3} 
+      dot={{ r: 4, stroke: '#F59E0B', strokeWidth: 2, fill: '#FFFFFF' }}
+      activeDot={{ r: 6, stroke: '#F59E0B', strokeWidth: 3, fill: '#FFFFFF' }}
+      name="Pagamentos Parciais"
+    />
+    <Line 
+      type="monotone" 
+      dataKey="returnedInvestments" 
+      stroke="#E11D48" 
+      strokeWidth={3} 
+      dot={{ r: 4, stroke: '#E11D48', strokeWidth: 2, fill: '#FFFFFF' }}
+      activeDot={{ r: 6, stroke: '#E11D48', strokeWidth: 3, fill: '#FFFFFF' }}
+      name="Investimentos Retornados"
+    />
+  </LineChart>
+</ResponsiveContainer>
 
-          {/* Client Statistics Section */}
-          <div className="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 md:col-span-2 grid grid-cols-2 gap-4">
+</div>
+
+
+        {/* Client Statistics Section */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 md:col-span-3 grid grid-cols-2 gap-4">
             <div className="bg-gray-700 rounded-lg p-4 flex items-center">
               <Users className="mr-4 text-blue-400 w-10 h-10" />
               <div>
@@ -255,9 +282,9 @@ const FuturisticDashboard = () => {
             <div className="bg-gray-700 rounded-lg p-4 flex items-center">
               <Percent className="mr-4 text-yellow-400 w-10 h-10" />
               <div>
-                <h4 className="text-gray-300 text-sm">Valor Médio de Empréstimo</h4>
+                <h4 className="text-gray-300 text-sm">Empréstimo Médio</h4>
                 <p className="text-2xl font-bold text-yellow-300">
-                  {moedabr2(dashboardData.clientStats.averageLoanAmount)}
+                  {formatCurrency(dashboardData.clientStats.averageLoanAmount)}
                 </p>
               </div>
             </div>
@@ -278,28 +305,21 @@ const FuturisticDashboard = () => {
         <div className="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 mt-12">
           <h3 className="text-xl font-semibold mb-4 text-gray-200">Clientes em Atraso</h3>
           <div className="space-y-6">
-          {dashboardData.overdueClients.map((client, index) => (
-  <div 
-    key={index} 
-    className="flex items-center justify-between bg-gray-700 rounded-lg p-4"
-  >
-    <div>
-      <h4 className="text-lg font-semibold text-gray-300">
-        {client.nome} {/* Exibe o nome do cliente */}
-      </h4>
-      <p className="text-sm text-gray-400">
-        {client.telefone} {/* Exibe o telefone do cliente */}
-      </p>
-    </div>
-    <div className="flex items-center">
-      <span className="text-xs text-gray-400">
-        {calcularDiasAtraso(client.dataEmprestimo)} dias de atraso {/* Calcula o atraso a partir da data do empréstimo */}
-      </span>
-      <UserX className="ml-4 text-red-400 w-6 h-6" />
-    </div>
-  </div>
-))}
-
+            {dashboardData.overdueClients.map((client, index) => (
+              <div 
+                key={index} 
+                className="flex items-center justify-between bg-gray-700 rounded-lg p-4"
+              >
+                <div>
+                  <h4 className="text-lg font-semibold text-gray-300">{client.nome}</h4>
+                  <p className="text-sm text-gray-400">{client.telefone}</p>
+                </div>
+                <div className="flex items-center">
+                  <span className="text-xs text-gray-400">{calcularDiasAtraso(client.dataEmprestimo)} dias de atraso</span>
+                  <UserX className="ml-4 text-red-400 w-6 h-6" />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

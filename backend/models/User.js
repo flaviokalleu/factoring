@@ -32,9 +32,13 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  empresa: {
-    type: DataTypes.STRING,
+  companyId: {
+    type: DataTypes.INTEGER,
     allowNull: true,
+    references: {
+      model: 'Companies',
+      key: 'id'
+    }
   },
   subdomain: {
     type: DataTypes.STRING,

@@ -1,3 +1,4 @@
+const auditLogger = require('../middleware/auditLogger');
 // routes/userRoutes.js
 const express = require('express');
 const bcrypt = require('bcrypt');
@@ -10,10 +11,14 @@ const { getUserById } = require('../controllers/userController');
 
 // Rota para registro de usuário
 // Rota para registro de usuário
-router.post('/register', async (req, res) => {
-  const { username, firstName, lastName, whatsapp, empresa, cpf, email, senha, subdomain, planoId } = req.body;
+router.post('/register', accessControl(), async (req, res) => {
+  const { username, firstName, lastName, whatsapp, companyId, cpf, email, senha, subdomain, planoId } = req.body;
 
   try {
+    // Se for admin, só pode criar usuário para sua própria empresa
+    if (req.user.role === 'admin' && companyId !== req.user.companyId) {
+      return res.status(403).json({ error: 'Admin só pode criar usuários da própria empresa.' });
+    }
     // Verifica se o nome de usuário já existe
     const existingUser = await User.findOne({ where: { username } });
     if (existingUser) {
@@ -29,7 +34,7 @@ router.post('/register', async (req, res) => {
       firstName,
       lastName,
       whatsapp,
-      empresa,
+      companyId,
       cpf,
       email,
       senha: hashedPassword, // Senha criptografada
@@ -48,6 +53,7 @@ router.post('/register', async (req, res) => {
       expiresAt: expirationDate,
     });
 
+    await auditLogger(req.user.id, 'register_user', `Usuário criado: ${newUser.username}`);
     res.status(201).json({ message: 'User registered successfully!', user: newUser });
   } catch (error) {
     if (error.name === 'SequelizeUniqueConstraintError') {
@@ -58,12 +64,34 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// Rota para obter o usuário a partir do refreshToken
 
+// Rota para listar usuários, respeitando regras de acesso
+const accessControl = require('../middleware/accessControl');
+// Rota para listar usuários com paginação e filtro de status
+router.get('/', accessControl(), async (req, res) => {
+  try {
+    let where = {};
+    if (req.companyFilter) {
+      where = req.companyFilter;
+    }
+    if (req.query.status) {
+      where.status = req.query.status;
+    }
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const offset = (page - 1) * limit;
+    const { count, rows } = await User.findAndCountAll({ where, limit, offset });
+    res.json({
+      users: rows,
+      total: count,
+      page,
+      pages: Math.ceil(count / limit)
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar usuários' });
+  }
+});
 
 router.get('/users/:id', getUserById);
-
-
-
 
 module.exports = router;

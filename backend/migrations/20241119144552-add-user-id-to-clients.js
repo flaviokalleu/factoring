@@ -2,11 +2,11 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.addColumn('clients', 'userId', {
+    await queryInterface.addColumn('Clients', 'userId', {
       type: Sequelize.INTEGER, // Tipo do dado, dependendo do seu modelo (INTEGER, UUID, etc)
       allowNull: false, // Garantir que o campo não seja nulo
       references: {
-        model: 'users', // A tabela associada que contém os usuários
+        model: 'Users', // A tabela associada que contém os usuários
         key: 'id', // A chave primária da tabela users
       },
       onUpdate: 'CASCADE', // Se o ID do usuário mudar, isso atualizará os clientes associados
@@ -15,6 +15,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.removeColumn('clients', 'userId');
+    await queryInterface.removeColumn('Clients', 'userId');
   }
 };

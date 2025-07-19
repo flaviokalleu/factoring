@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const { generateAccessToken, generateRefreshToken } = require('../utils/token');
 
 const register = async (req, res) => {
-  const { email, senha, username, firstName, lastName, cpf, whatsapp, empresa, subdomain, planoId } = req.body;
+  const { email, senha, username, firstName, lastName, cpf, whatsapp, companyId, subdomain, planoId } = req.body;
 
   try {
     // Verificar se o usuário já existe
@@ -27,7 +27,7 @@ const register = async (req, res) => {
       lastName,
       cpf,
       whatsapp,
-      empresa,
+      companyId,
       subdomain,
     });
 

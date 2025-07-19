@@ -55,6 +55,21 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      role: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: 'admin'
+      },
+      companyId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'Companies',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
       }
     });
   },

@@ -66,7 +66,7 @@ function InnovativeNavbar() {
           {/* Logo Area */}
           <div className="flex items-center">
             <Link 
-              to="/" 
+              to="/dashboard" 
               className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600"
             >
               Dashboard
@@ -115,7 +115,7 @@ function InnovativeNavbar() {
               </div>
             ) : (
               <Link 
-                to="/login"
+                to="/"
                 className="
                   bg-gradient-to-r from-cyan-500 to-blue-600 
                   text-white px-4 py-2 rounded-lg 

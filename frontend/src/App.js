@@ -13,6 +13,7 @@ import ListaNegra from './pages/ListaNegra';
 import ListaAfiliados from './pages/ListaAfiliados';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import LandingPage from './pages/LandingPage';
 
 // Importando o Navbar
 import Navbar from './components/Navbar';
@@ -43,12 +44,19 @@ function AppRoutes() {
   return (
     <Router>
       <Routes>
+      
         {/* Rotas públicas */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-
         {/* Rotas privadas */}
         <Route path="/" element={
+          
+            <LandingPage />
+          
+        } />
+
+        {/* Rotas privadas */}
+        <Route path="/dashboard" element={
           <PrivateRoute>
             <PrivateLayout><Dashboard /></PrivateLayout>
           </PrivateRoute>

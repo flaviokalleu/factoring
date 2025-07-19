@@ -1,18 +1,33 @@
 const { Sequelize } = require('sequelize');
 
-// Carregar as variáveis do .env
 require('dotenv').config();
 
-// Configurações do banco de dados usando variáveis de ambiente
-const sequelize = new Sequelize(
-    process.env.DB_NAME,    // Nome do banco de dados
-    process.env.DB_USER,    // Usuário do banco de dados
-    process.env.DB_PASSWORD, // Senha do banco de dados
-    {
-        host: process.env.DB_HOST, // Host do banco de dados
-        dialect: 'mysql',
-        logging: false,            // Desativar logs de consultas (opcional)
-    }
-);
-
-module.exports = sequelize;
+module.exports = {
+  development: {
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT || 5432,
+    dialect: 'postgres',
+    logging: false
+  },
+  test: {
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT || 5432,
+    dialect: 'postgres',
+    logging: false
+  },
+  production: {
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT || 5432,
+    dialect: 'postgres',
+    logging: false
+  }
+};
